@@ -1,10 +1,13 @@
 // ==UserScript==
 // @name         RemoveBotInMsgers
-// @version      0.9.3
+// @version      0.9.5
 // @namespace    https://up-world.ru/
+// @homepage https://github.com/reek/anti-adblock-killer/
 // @description  Добавляет кого угодно в Черный список
 // @author       Misterzym
 // @match        https://vk.com/im?*
+// @updateURL https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
+// @downloadURL https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
 // @grant        none
 // ==/UserScript==
 var blackList = {};
