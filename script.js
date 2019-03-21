@@ -28,6 +28,7 @@ var peaple = JSON.stringify({
         for (var prop in blackList) {
             $("._im_peer_history.im-page-chat-contain").find("div[data-peer='" + prop + "']").remove();
             $(".im-mess-stack--lnk[href='" + blackList[prop].url + "']").closest(".im-mess-stack").remove();
+            $(".nim-dialog._im_dialog[data-list-id='" + prop + "']").remove();
         }
 
         $(".im-mess-stack").unbind().on('mouseenter', function() {
