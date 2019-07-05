@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         RemoveBotInMsgers
-// @version      0.10.3
+// @version      0.10.5
 // @homepage https://github.com/misterzym/blockvkbot
 // @description  Добавляет кого угодно в Черный список
 // @author       Misterzym
