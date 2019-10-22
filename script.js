@@ -93,35 +93,17 @@ var peaple = JSON.stringify({
     }, 1000);
 })();
 
-function genBlackList() {
+function showModal(head,body){
+    return '<div id="box_layer_wrap" class="blackListGened fixed" style="top:165px;"><div id="box_layer"><div id="box_loader"><div class="pr pr_baw pr_medium" id="box_loader_pr"><div class="pr_bt"></div><div class="pr_bt"></div><div class="pr_bt"></div></div><div class="back"></div></div><div class="popup_box_container" tabindex="0" style="width:30%;"><div class="box_layout" onclick="boxQueue.skip=true;"><div class="box_title_wrap"><div class="box_x_button hideBlackList" aria-label="Закрыть" tabindex="0" role="button"></div><div class="box_title_controls"></div><div class="box_title">'+head+'<sup><i></i></sup></div></div><div class="box_body box_no_buttons">' + body + '</div></div></div></div></div>';
+}
+
+function genBlackListUsers() {
     var tt = "";
     for (var prop in blackList) {
-        tt = tt + '<div style="line-height:1.7;"><img src="' + blackList[prop].avatar + '" style="float:left;margin-right:10px;"> <a href="' + blackList[prop].url + '" target="_blank" style="font-weight:bold;">' + blackList[prop].name + '</a><br><a href="#" data-peered="' + prop + '" class="removeBlackList"><img style="width:13px;" src="'+GM_getResourceURL("del")+'"></a></div><br style="clear:both;">';
+        tt = tt + '<div style="line-height:1.7;"><img src="' + blackList[prop].avatar + '" style="float:left;margin-right:10px;"> <a href="' + blackList[prop].url + '" target="_blank" style="font-weight:bold;">' + blackList[prop].name + '</a><br><a href="#" data-peered="' + prop + '" class="removeBlackList"><img style="width:13px;" src="'+GM_getResourceURL("del")+'""></a></div><br style="clear:both;">';
     }
 
-    return '<div id="box_layer_wrap" class="blackListGened fixed" style="top:165px;">' +
-        '<div id="box_layer">' +
-        '<div id="box_loader">' +
-        '<div class="pr pr_baw pr_medium" id="box_loader_pr">' +
-        '<div class="pr_bt"></div>' +
-        '<div class="pr_bt"></div>' +
-        '<div class="pr_bt"></div>' +
-        '</div>' +
-        '<div class="back"></div>' +
-        '</div>' +
-        '<div class="popup_box_container" tabindex="0" style="width:30%;">' +
-        '<div class="box_layout" onclick="boxQueue.skip=true;">' +
-        '<div class="box_title_wrap">' +
-        '<div class="box_x_button hideBlackList" aria-label="Закрыть" tabindex="0" role="button"></div>' +
-        '<div class="box_title_controls"></div>' +
-        '<div class="box_title">VK BlackList<sup><i></i></sup></div>' +
-        '</div>' +
-        '<div class="box_body box_no_buttons">' + tt +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
+    return showModal("VK Black List",tt);
 }
 
 function save() {
