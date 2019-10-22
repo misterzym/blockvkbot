@@ -9,7 +9,7 @@
 // @downloadURL https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
 // @icon         https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/logo.png
 // @grant        none
-// @require https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
+// @resource     jquery https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // @resource     add https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/add.png
 // @resource     del https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/del.png
 // ==/UserScript==
@@ -24,6 +24,14 @@ var peaple = JSON.stringify({
 
 (function() {
     var timerId = setInterval(function() {
+
+	if (typeof $ !=="function"){
+        var script = document.createElement("script");
+        script.textContent = window.atob(GM_getResourceURL("jquery").replace("data:text/javascript;base64,",""));
+        document.body.appendChild(script);
+        return;
+    }
+
         for (var prop in blackList) {
             $("._im_peer_history.im-page-chat-contain").find("div[data-peer='" + prop + "']").remove();
             $(".im-mess-stack--lnk[href='" + blackList[prop].url + "']").closest(".im-mess-stack").remove();
