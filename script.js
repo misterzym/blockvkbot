@@ -18,8 +18,6 @@
 // ==/UserScript==
 var blackList = {};
 load();
-if (blackList == null)
-    blackList = {};
 var peaple = JSON.stringify({
     name: "",
     url: ""
@@ -127,9 +125,9 @@ function genBlackList() {
 }
 
 function save() {
-    localStorage.setItem('blackList', JSON.stringify(blackList));
+    GM_setValue("blackList",JSON.stringify(blackList));
 }
 
 function load() {
-    blackList = JSON.parse(localStorage.getItem('blackList'));
+    blackList = JSON.parse(GM_getValue("blackList","{}"));
 }
