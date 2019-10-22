@@ -4,11 +4,13 @@
 // @homepage https://github.com/misterzym/blockvkbot
 // @description  Добавляет кого угодно в Черный список
 // @author       Misterzym
-// @match        https://vk.com/im?*
-// @updateURL https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
-// @downloadURL https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
+// @match        https://vk.com/*
+// @updateURL    https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
+// @downloadURL  https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
 // @icon         https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/logo.png
-// @grant        none
+// @grant        GM_getResourceURL
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @resource     jquery https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // @resource     add https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/add.png
 // @resource     del https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/del.png
@@ -25,57 +27,59 @@ var peaple = JSON.stringify({
 (function() {
     var timerId = setInterval(function() {
 
-	if (typeof $ !=="function"){
-        var script = document.createElement("script");
-        script.textContent = window.atob(GM_getResourceURL("jquery").replace("data:text/javascript;base64,",""));
-        document.body.appendChild(script);
-        return;
-    }
-
-        for (var prop in blackList) {
-            $("._im_peer_history.im-page-chat-contain").find("div[data-peer='" + prop + "']").remove();
-            $(".im-mess-stack--lnk[href='" + blackList[prop].url + "']").closest(".im-mess-stack").remove();
-            $(".nim-dialog._im_dialog[data-list-id='" + prop + "']").remove();
+    	if (typeof $ !=="function"){
+            var script = document.createElement("script");
+            script.textContent = window.atob(GM_getResourceURL("jquery").replace("data:text/javascript;base64,",""));
+            document.body.appendChild(script);
+            return;
         }
+    	
+    	if (window.location.href.indexOf("vk.com/im?")!==-1){
+    		for (var prop in blackList) {
+                $("._im_peer_history.im-page-chat-contain").find("div[data-peer='" + prop + "']").remove();
+                $(".im-mess-stack--lnk[href='" + blackList[prop].url + "']").closest(".im-mess-stack").remove();
+                $(".nim-dialog._im_dialog[data-list-id='" + prop + "']").remove();
+            }
 
-        $(".im-mess-stack").unbind().on('mouseenter', function() {
-            $(this).append('<a href="#" onclick="return false;" class="addBlackList" data-peeder="' + $(this).data('peer') + '" style="position:absolute;position:absolute;right:5px;top:10px;"><img src="'+GM_getResourceURL("add")+'" style="width:20px;"></a>');
-            $(".addBlackList").on("click", function() {
-                var peer = $(this).data("peeder");
-                blackList[peer] = JSON.parse(peaple);
-                blackList[peer].name = $(this).closest(".im-mess-stack").find(".im-mess-stack--pname a").html();
-                blackList[peer].url = $(this).closest(".im-mess-stack").find(".im-mess-stack--pname a").attr("href");
-                blackList[peer].avatar = $(this).closest(".im-mess-stack").find(".nim-peer--photo img").attr("src");
-                save();
-                return false;
-            });
-        }).on("mouseleave", function() {
-            $(this).find(".addBlackList").unbind().remove();
-        });
-
-        if (!$("a").is(".blackListButton")){
-            $("._im_dialog_action_wrapper ._ui_menu").append('<div class="ui_actions_menu_sep"></div><a tabindex="0" role="link" class="ui_actions_menu_item _im_action im-action blackListButton">Черный список</a>');
-
-            $(".blackListButton").unbind().on('click', function() {
-                $(".blackListGened").remove();
-                $("body").append(genBlackList());
-                $(".blackListGened").fadeIn(500);
-                $(".removeBlackList").on('click', function() {
-                    var peed = $(this).data('peered');
-                    delete blackList[peed];
+            $(".im-mess-stack").unbind().on('mouseenter', function() {
+                $(this).append('<a href="#" onclick="return false;" class="addBlackList" data-peeder="' + $(this).data('peer') + '" style="position:absolute;position:absolute;right:5px;top:10px;"><img src="'+GM_getResourceURL("add")+'" style="width:20px;"></a>');
+                $(".addBlackList").on("click", function() {
+                    var peer = $(this).data("peeder");
+                    blackList[peer] = JSON.parse(peaple);
+                    blackList[peer].name = $(this).closest(".im-mess-stack").find(".im-mess-stack--pname a").html();
+                    blackList[peer].url = $(this).closest(".im-mess-stack").find(".im-mess-stack--pname a").attr("href");
+                    blackList[peer].avatar = $(this).closest(".im-mess-stack").find(".nim-peer--photo img").attr("src");
                     save();
-                    $(".hideBlackList").click();
-                    location.reload();
                     return false;
                 });
-                $(".hideBlackList").on('click', function() {
-                    $(this).closest(".blackListGened").fadeOut(500);
-                    $(this).unbind();
-                    $(this).closest(".blackListGened").remove();
-                    return false;
-                });
+            }).on("mouseleave", function() {
+                $(this).find(".addBlackList").unbind().remove();
             });
-        }
+
+            if (!$("a").is(".blackListButton")){
+                $("._im_dialog_action_wrapper ._ui_menu").append('<div class="ui_actions_menu_sep"></div><a tabindex="0" role="link" class="ui_actions_menu_item _im_action im-action blackListButton">Черный список</a>');
+
+                $(".blackListButton").unbind().on('click', function() {
+                    $(".blackListGened").remove();
+                    $("body").append(genBlackList());
+                    $(".blackListGened").fadeIn(500);
+                    $(".removeBlackList").on('click', function() {
+                        var peed = $(this).data('peered');
+                        delete blackList[peed];
+                        save();
+                        $(".hideBlackList").click();
+                        location.reload();
+                        return false;
+                    });
+                    $(".hideBlackList").on('click', function() {
+                        $(this).closest(".blackListGened").fadeOut(500);
+                        $(this).unbind();
+                        $(this).closest(".blackListGened").remove();
+                        return false;
+                    });
+                });
+            }
+    	}
     }, 1000);
 })();
 
