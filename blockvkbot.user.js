@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         RemoveBotInMsgers
-// @version      0.10.5
-// @homepage https://github.com/misterzym/blockvkbot
+// @version      0.11.2
+// @homepage     https://net-bit.ru/userjs-universalnyj-chyornyj-spisok/
 // @description  Добавляет кого угодно в Черный список
 // @author       Misterzym
 // @match        https://vk.com/*
-// @updateURL    https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
-// @downloadURL  https://raw.githubusercontent.com/misterzym/blockvkbot/master/script.js
+// @updateURL    https://github.com/misterzym/blockvkbot/raw/master/blockvkbot.user.js
+// @downloadURL  https://github.com/misterzym/blockvkbot/raw/master/blockvkbot.user.js
 // @icon         https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/logo.png
 // @grant        GM_getResourceURL
 // @grant        GM_setValue
