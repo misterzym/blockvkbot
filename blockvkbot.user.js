@@ -45,16 +45,16 @@ var peaple = JSON.stringify({
         });
     }, "13");
     var timerId = setInterval(function() {
-    	if (typeof $ !=="function"){
+        if (typeof $ !=="function"){
             var script = document.createElement("script");
             script.textContent = window.atob(GM_getResourceURL("jquery").replace("data:text/javascript;base64,",""));
             document.body.appendChild(script);
             return;
         }
-    	
-    	if (window.location.href.indexOf("vk.com/im?")!==-1){
-    		for (var prop in blackList) {
-                $("._im_peer_history.im-page-chat-contain").find("div[data-peer='" + prop + "']").remove();
+
+        if (window.location.href.indexOf("vk.com/im?")!==-1){
+            for (var prop in blackList) {
+                $("div[data-peer='" + prop + "']").remove();
                 $(".im-mess-stack--lnk[href='" + blackList[prop].url + "']").closest(".im-mess-stack").remove();
                 $(".nim-dialog._im_dialog[data-list-id='" + prop + "']").remove();
             }
@@ -97,7 +97,7 @@ var peaple = JSON.stringify({
                     });
                 });
             }
-    	}
+        }
     }, 1000);
 })();
 
