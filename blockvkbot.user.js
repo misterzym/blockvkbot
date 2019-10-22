@@ -35,7 +35,15 @@ var peaple = JSON.stringify({
             $(".hideBlackList").click();
             location.reload();
             return false;
-    });
+        });
+        $(".hideBlackList").unbind().on('click', function() {
+            $(this).closest(".blackListGened").fadeOut(500);
+            $(this).unbind();
+            $(".removeBlackList").unbind();
+            $(this).closest(".blackListGened").remove();
+            return false;
+        });
+    }, "13");
     var timerId = setInterval(function() {
     	if (typeof $ !=="function"){
             var script = document.createElement("script");
