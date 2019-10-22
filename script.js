@@ -11,6 +11,7 @@
 // @grant        GM_getResourceURL
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_registerMenuCommand
 // @resource     jquery https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js
 // @resource     add https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/add.png
 // @resource     del https://net-bit.ru/wp-content/uploads/userJsFiles/vkBlackList/del.png
@@ -25,8 +26,19 @@ var peaple = JSON.stringify({
 });
 
 (function() {
+    GM_registerMenuCommand("Черный список диалогов",function(){
+        $(".blackListGened").remove();
+        $("body").append(genBlackListUsers());
+        $(".blackListGened").fadeIn(500);
+        $(".removeBlackList").on('click', function() {
+            var peed = $(this).data('peered');
+            delete blackList[peed];
+            save();
+            $(".hideBlackList").click();
+            location.reload();
+            return false;
+    });
     var timerId = setInterval(function() {
-
     	if (typeof $ !=="function"){
             var script = document.createElement("script");
             script.textContent = window.atob(GM_getResourceURL("jquery").replace("data:text/javascript;base64,",""));
